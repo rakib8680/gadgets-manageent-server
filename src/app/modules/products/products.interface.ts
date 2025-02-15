@@ -20,14 +20,14 @@ type TConnectivity =
 
 type TPowerSource = "Battery" | "Plug-in" | "Battery & Plug-in";
 
-type TFeature = {
+export type TFeature = {
   cameraResolution?: string;
   storageCapacity?: string;
   screenSize?: string;
   [key: string]: any; // Additional features can be added dynamically
 };
 
-type TDimensions = {
+export type TDimensions = {
   width: number;
   height: number;
   depth: number;

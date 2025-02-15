@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { TDimensions, TFeature, TProduct } from "./products.interface";
 
 const dimensionsSchema = new Schema<TDimensions>({
@@ -33,3 +33,5 @@ const productSchema = new Schema<TProduct>({
   dimensions: { type: dimensionsSchema },
   compatibility: { type: [String] },
 });
+
+export const ProductModel = model<TProduct>("product", productSchema);

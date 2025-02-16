@@ -15,6 +15,6 @@ const addProduct = catchAsync(async (req, res) => {
   });
 });
 
-export const CourseController = {
+export const ProductController = {
   addProduct,
 };

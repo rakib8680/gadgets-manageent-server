@@ -22,12 +22,24 @@ const getAllProducts = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: status.OK,
-    message: "All products",
+    message: "All products fetched successfully",
+    data: result,
+  });
+});
+
+// delete products from DB
+const deleteProduct = catchAsync(async (req, res) => {
+  const result = await ProductServices.deleteProduct(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "Product deleted successfully",
     data: result,
   });
 });
 
 export const ProductController = {
   addProduct,
-    getAllProducts,
+  getAllProducts,
+  deleteProduct,
 };

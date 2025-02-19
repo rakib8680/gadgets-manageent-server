@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
+
 export type TSalesHistory = {
-  productId: number;
+  productId: Types.ObjectId;
   productName: string;
   quantity: number;
   buyerName: string;

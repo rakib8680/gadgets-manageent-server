@@ -38,8 +38,22 @@ const deleteProduct = catchAsync(async (req, res) => {
   });
 });
 
+// sell product
+const sellProduct = catchAsync(async (req, res) => {
+  const productId = req.params.id;
+  const payload = req.body;
+  const result = await ProductServices.sellProduct(productId, payload);
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "Product sold successfully",
+    data: result,
+  });
+});
+
 export const ProductController = {
   addProduct,
   getAllProducts,
   deleteProduct,
+  sellProduct,
 };

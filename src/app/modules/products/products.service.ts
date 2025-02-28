@@ -24,7 +24,7 @@ const deleteProduct = async (id: string) => {
   return result;
 };
 
-// sell product
+// sell product ....................................................... start here 
 const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // check if product exists
   const product = await ProductModel.findById(productId);

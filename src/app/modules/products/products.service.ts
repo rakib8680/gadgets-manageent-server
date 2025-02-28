@@ -3,6 +3,7 @@ import { TSalesHistory } from "../sales_history/history.interface";
 import { TProduct } from "./products.interface";
 import { ProductModel } from "./products.model";
 import { SalesHistoryModel } from "../sales_history/history.model";
+import AppError from "../../errors/AppError";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
@@ -24,17 +25,17 @@ const deleteProduct = async (id: string) => {
   return result;
 };
 
-// sell product ....................................................... start here 
+// sell product ....................................................... start here
 const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // check if product exists
   const product = await ProductModel.findById(productId);
   if (!product) {
-    throw new Error("Product not found");
+    throw new AppError(status.NOT_FOUND, "Product not found");
   }
 
   // check if quantity is sufficient
   if (product.quantity < payload.quantity) {
-    throw new Error("Insufficient quantity");
+    throw new AppError(status.BAD_REQUEST, "Insufficient quantity");
   }
 
   // update product quantity & save

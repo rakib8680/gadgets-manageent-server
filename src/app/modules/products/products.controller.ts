@@ -27,6 +27,17 @@ const getAllProducts = catchAsync(async (req, res) => {
   });
 });
 
+// get single product by ID
+const getSingleProduct = catchAsync(async (req, res) => {
+  const result = await ProductServices.getSingleProduct(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "Product fetched successfully",
+    data: result,
+  });
+});
+
 // delete products from DB
 const deleteProduct = catchAsync(async (req, res) => {
   const result = await ProductServices.deleteProduct(req.params.id);
@@ -54,6 +65,7 @@ const sellProduct = catchAsync(async (req, res) => {
 export const ProductController = {
   addProduct,
   getAllProducts,
+  getSingleProduct,
   deleteProduct,
   sellProduct,
 };

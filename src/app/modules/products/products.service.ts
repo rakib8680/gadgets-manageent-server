@@ -19,13 +19,19 @@ const getAllProducts = async () => {
   return result;
 };
 
+// get single product by ID
+const getSingleProduct = async (id: string) => {
+  const result = await ProductModel.findById(id);
+  return result;
+};
+
 // delete products from DB
 const deleteProduct = async (id: string) => {
   const result = await ProductModel.findByIdAndDelete(id);
   return result;
 };
 
-// sell product ....................................................... start here
+// sell product
 const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // check if product exists
   const product = await ProductModel.findById(productId);
@@ -57,7 +63,7 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // delete product if quantity is 0
   if (product.quantity === 0) {
     await ProductModel.findByIdAndDelete(productId);
-  };
+  }
 
   return result;
 };
@@ -65,6 +71,7 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
 export const ProductServices = {
   addProduct,
   getAllProducts,
+  getSingleProduct,
   deleteProduct,
   sellProduct,
 };

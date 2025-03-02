@@ -54,7 +54,10 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
   };
   const result = await SalesHistoryModel.create(salesHistoryData);
 
-  // todo : delete product if quantity is 0
+  // delete product if quantity is 0
+  if (product.quantity === 0) {
+    await ProductModel.findByIdAndDelete(productId);
+  };
 
   return result;
 };

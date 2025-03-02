@@ -27,7 +27,7 @@ const salesHistorySchema = new Schema<TSalesHistory>({
     // required: true,
   },
   dateOfSale: {
-    type: String,
+    type: Date,
     required: true,
   },
 });

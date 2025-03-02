@@ -50,9 +50,11 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
     totalAmount: (product?.price as number) * payload.quantity,
     buyerName: payload.buyerName,
     buyerEmail: payload.buyerEmail,
-    dateOfSale: new Date().toISOString(),
+    dateOfSale: new Date(),
   };
   const result = await SalesHistoryModel.create(salesHistoryData);
+
+  // todo : delete product if quantity is 0
 
   return result;
 };

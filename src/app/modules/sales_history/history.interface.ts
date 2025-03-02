@@ -7,5 +7,5 @@ export type TSalesHistory = {
   buyerName: string;
   buyerEmail: string;
   totalAmount: number;
-  dateOfSale: string;
+  dateOfSale: Date;
 };

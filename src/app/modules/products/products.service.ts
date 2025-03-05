@@ -5,6 +5,7 @@ import { ProductModel } from "./products.model";
 import { SalesHistoryModel } from "../sales_history/history.model";
 import AppError from "../../errors/AppError";
 import QueryBuilder from "../../helpers/queryBuilder";
+import { productsSearchableFields } from "./products.contstant";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
@@ -17,6 +18,7 @@ const addProduct = async (payload: TProduct) => {
 const getAllProducts = async (query: Record<string, unknown>) => {
   console.log(query);
   const productsQuery = new QueryBuilder(ProductModel.find(), query)
+    .search(productsSearchableFields)
     .filterPrice()
     .sort();
 

@@ -4,6 +4,7 @@ import { TProduct } from "./products.interface";
 import { ProductModel } from "./products.model";
 import { SalesHistoryModel } from "../sales_history/history.model";
 import AppError from "../../errors/AppError";
+import QueryBuilder from "../../helpers/queryBuilder";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
@@ -13,10 +14,17 @@ const addProduct = async (payload: TProduct) => {
 };
 
 // get all products
-const getAllProducts = async () => {
-  const result = await ProductModel.find();
+const getAllProducts = async (query: Record<string, unknown>) => {
+  console.log(query);
+  const productsQuery = new QueryBuilder(ProductModel.find(), query)
+  .filterPrice();
 
-  return result;
+  const data = await productsQuery.modelQuery;
+  const meta = await productsQuery.countTotal();
+  return {
+    meta,
+    data,
+  };
 };
 
 // get single product by ID

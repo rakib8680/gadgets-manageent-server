@@ -17,7 +17,8 @@ const addProduct = async (payload: TProduct) => {
 const getAllProducts = async (query: Record<string, unknown>) => {
   console.log(query);
   const productsQuery = new QueryBuilder(ProductModel.find(), query)
-  .filterPrice();
+    .filterPrice()
+    .sort();
 
   const data = await productsQuery.modelQuery;
   const meta = await productsQuery.countTotal();

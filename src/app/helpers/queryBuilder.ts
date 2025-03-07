@@ -28,14 +28,6 @@ class QueryBuilder<T> {
   // Method to filter documents based on query parameters, excluding certain fields
   filter() {
     const queryObj = { ...this.query };
-    if (queryObj.level) {
-      queryObj["details.level"] = queryObj.level;
-      delete queryObj.level;
-    }
-    if (queryObj.tags) {
-      queryObj["tags.name"] = queryObj.tags;
-      delete queryObj.tags;
-    }
     const excludeFields = [
       "searchTerm",
       "sort",

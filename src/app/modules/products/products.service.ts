@@ -43,6 +43,9 @@ const getAllProducts = async (query: Record<string, unknown>) => {
 // get single product by ID
 const getSingleProduct = async (id: string) => {
   const result = await ProductModel.findById(id);
+  if (!result) {
+    throw new AppError(status.NOT_FOUND, "No product found");
+  }
   return result;
 };
 

@@ -52,7 +52,10 @@ const getSingleProduct = async (id: string) => {
 // delete products from DB
 const deleteProduct = async (id: string) => {
   const result = await ProductModel.findByIdAndDelete(id);
-  return result;
+  if (!result) {
+    throw new AppError(status.NOT_FOUND, "No product found to delete");
+  }
+  return null;
 };
 
 // sell product
@@ -60,7 +63,7 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // check if product exists
   const product = await ProductModel.findById(productId);
   if (!product) {
-    throw new AppError(status.NOT_FOUND, "Product not found");
+    throw new AppError(status.NOT_FOUND, "No product found to sell");
   }
 
   // check if quantity is sufficient

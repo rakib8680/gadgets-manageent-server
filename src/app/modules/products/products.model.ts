@@ -34,4 +34,9 @@ const productSchema = new Schema<TProduct>({
   compatibility: { type: [String] },
 });
 
+// static method to check if product exists
+// productSchema.statics.isProductExist = async function (name: string) {
+//   return await this.findOne({ name });
+// };
+
 export const ProductModel = model<TProduct>("product", productSchema);

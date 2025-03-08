@@ -9,14 +9,22 @@ import { productsSearchableFields } from "./products.contstant";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
-  const result = await ProductModel.create(payload);
+  // check if product exists
+  const isProductExist = await ProductModel.findOne({ name: payload.name });
 
-  return result;
+  // if product exists, update quantity if not add new product
+  if (isProductExist) {
+    isProductExist.quantity += payload.quantity;
+    await isProductExist.save();
+    return isProductExist;
+  } else {
+    const result = await ProductModel.create(payload);
+    return result;
+  }
 };
 
 // get all products
 const getAllProducts = async (query: Record<string, unknown>) => {
-  console.log(query);
   const productsQuery = new QueryBuilder(ProductModel.find(), query)
     .search(productsSearchableFields)
     .filterPrice()

@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 type TCategory =
   | "smartphone"
   | "tablet"
@@ -50,3 +52,8 @@ export type TProduct = {
   dimensions?: TDimensions;
   compatibility?: string[];
 };
+
+// // static methods
+// export interface staticProductModel extends Model<TProduct> {
+//   isProductExist(name: string): Promise<TProduct>;
+// }

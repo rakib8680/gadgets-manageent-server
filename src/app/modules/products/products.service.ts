@@ -5,7 +5,7 @@ import { ProductModel } from "./products.model";
 import { SalesHistoryModel } from "../sales_history/history.model";
 import AppError from "../../errors/AppError";
 import QueryBuilder from "../../helpers/queryBuilder";
-import { productsSearchableFields } from "./products.contstant";
+import { productsSearchableFields } from "./products.constant";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
@@ -46,6 +46,21 @@ const getSingleProduct = async (id: string) => {
   if (!result) {
     throw new AppError(status.NOT_FOUND, "No product found");
   }
+  return result;
+};
+
+// update product
+const updateProduct = async (id: string, payload: Partial<TProduct>) => {
+  // check if product exists
+  if (!(await ProductModel.findById(id))) {
+    throw new AppError(status.NOT_FOUND, "No product found to update");
+  };
+
+  const result = await ProductModel.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+
   return result;
 };
 
@@ -101,4 +116,5 @@ export const ProductServices = {
   getSingleProduct,
   deleteProduct,
   sellProduct,
+  updateProduct,
 };

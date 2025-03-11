@@ -49,13 +49,8 @@ const getSingleProduct = async (id: string) => {
   return result;
 };
 
-
-
-
 // update product
 const updateProduct = async (id: string, payload: Partial<TProduct>) => {
-  console.log(payload);
-
   // remove non primitive fields
   const { features, dimensions, ...remainingFields } = payload;
 
@@ -85,11 +80,6 @@ const updateProduct = async (id: string, payload: Partial<TProduct>) => {
 
   return result;
 };
-
-
-
-
-
 
 // delete products from DB
 const deleteProduct = async (id: string) => {

@@ -1,11 +1,16 @@
 import { Schema, model } from "mongoose";
 import { TDimensions, TFeature, TProduct } from "./products.interface";
 
-const dimensionsSchema = new Schema<TDimensions>({
-  width: { type: Number },
-  height: { type: Number },
-  depth: { type: Number },
-});
+const dimensionsSchema = new Schema<TDimensions>(
+  {
+    width: { type: Number },
+    height: { type: Number },
+    depth: { type: Number },
+  },
+  {
+    _id: false,
+  }
+);
 const featuresSchema = new Schema<TFeature>(
   {
     cameraResolution: { type: String },
@@ -13,7 +18,7 @@ const featuresSchema = new Schema<TFeature>(
     screenSize: { type: String },
     // Additional features can be added dynamically
   },
-  { strict: false }
+  { strict: false, _id: false }
 );
 
 const productSchema = new Schema<TProduct>({

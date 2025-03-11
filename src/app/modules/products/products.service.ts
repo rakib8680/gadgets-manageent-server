@@ -49,20 +49,47 @@ const getSingleProduct = async (id: string) => {
   return result;
 };
 
+
+
+
 // update product
 const updateProduct = async (id: string, payload: Partial<TProduct>) => {
+  console.log(payload);
+
+  // remove non primitive fields
+  const { features, dimensions, ...remainingFields } = payload;
+
   // check if product exists
   if (!(await ProductModel.findById(id))) {
     throw new AppError(status.NOT_FOUND, "No product found to update");
-  };
+  }
 
-  const result = await ProductModel.findByIdAndUpdate(id, payload, {
+  const modifiedPayload: Record<string, unknown> = { ...remainingFields };
+
+  // List of non-primitive fields to update
+  const nestedFields = ["features", "dimensions"];
+
+  for (const field of nestedFields) {
+    const data = payload[field as keyof typeof payload];
+    if (data && Object.keys(data).length) {
+      for (const [key, value] of Object.entries(data)) {
+        modifiedPayload[`${field}.${key}`] = value;
+      }
+    }
+  }
+
+  const result = await ProductModel.findByIdAndUpdate(id, modifiedPayload, {
     new: true,
     runValidators: true,
   });
 
   return result;
 };
+
+
+
+
+
 
 // delete products from DB
 const deleteProduct = async (id: string) => {

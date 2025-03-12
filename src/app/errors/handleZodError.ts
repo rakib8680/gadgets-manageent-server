@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
+import { TErrorResponse } from "../Types/TErrorResponse";
 
-const handleZodError = (error: ZodError) => {
+const handleZodError = (error: ZodError):TErrorResponse => {
   const extractedMessage = error.issues
     .map((issue) => {
       const fieldName = issue.path.join(".");

@@ -1,6 +1,8 @@
 import { ErrorRequestHandler } from "express";
 import AppError from "../errors/AppError";
 import { TErrorResponse } from "../Types/TErrorResponse";
+import { ZodError } from "zod";
+import handleZodError from "../errors/handleZodError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorResponse: TErrorResponse = {
@@ -9,7 +11,9 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorMessage: "Something Went Wrong",
   };
 
-  if (err instanceof AppError) {
+  if (err instanceof ZodError) {
+    errorResponse = handleZodError(err);
+  } else if (err instanceof AppError) {
     errorResponse = {
       success: false,
       message: err.message,

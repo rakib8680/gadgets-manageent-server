@@ -22,6 +22,7 @@ const createProductValidationSchema = z.object({
   price: z.number().min(1, {
     message: "Price must be greater than 0",
   }),
+  releaseDate: z.string({ required_error: "Release date is required" }),
   imageURL: z.string({ required_error: "Image URL is required" }),
   quantity: z
     .number()

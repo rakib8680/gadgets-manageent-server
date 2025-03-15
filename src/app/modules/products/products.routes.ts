@@ -7,7 +7,7 @@ const router = Router();
 
 router.post(
   "/add-gadgets",
-  validateRequest(productValidations.createProductValidationSchema),
+  // validateRequest(productValidations.createProductValidationSchema),
   ProductController.addProduct
 );
 router.get("/all-gadgets", ProductController.getAllProducts);

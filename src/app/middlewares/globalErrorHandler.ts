@@ -5,6 +5,7 @@ import { ZodError } from "zod";
 import handleZodError from "../errors/handleZodError";
 import mongoose from "mongoose";
 import handleCastError from "../errors/handleCastError";
+import duplicateKeyError from "../errors/duplicateKeyError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorResponse: TErrorResponse = {
@@ -13,12 +14,14 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorMessage: "Something Went Wrong",
   };
 
-  // console.log(err instanceof mongoose.Error.CastError);
+  // console.log(err.code === 11000);
 
   if (err instanceof ZodError) {
     errorResponse = handleZodError(err);
   } else if (err instanceof mongoose.Error.CastError) {
     errorResponse = handleCastError(err);
+  }else if(err?.code ===11000){
+    errorResponse = duplicateKeyError(err);
   } else if (err instanceof AppError) {
     errorResponse = {
       success: false,

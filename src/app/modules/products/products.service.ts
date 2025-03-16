@@ -90,6 +90,26 @@ const deleteProduct = async (id: string) => {
   return null;
 };
 
+// delete multiple products
+const deleteMultipleProducts = async (payload: {
+  selectedGadgets: string[];
+}) => {
+  const { selectedGadgets } = payload;
+  if (!selectedGadgets.length) {
+    throw new AppError(status.BAD_REQUEST, "No products selected to delete");
+  }
+
+  const result = await ProductModel.deleteMany({
+    _id: { $in: selectedGadgets },
+  });
+
+  if (!result.deletedCount) {
+    throw new AppError(status.NOT_FOUND, "No products found to delete");
+  }
+
+  return null;
+};
+
 // sell product
 const sellProduct = async (productId: string, payload: TSalesHistory) => {
   // check if product exists
@@ -132,6 +152,7 @@ export const ProductServices = {
   getAllProducts,
   getSingleProduct,
   deleteProduct,
+  deleteMultipleProducts,
   sellProduct,
   updateProduct,
 };

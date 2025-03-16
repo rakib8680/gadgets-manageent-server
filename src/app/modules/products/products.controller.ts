@@ -61,6 +61,17 @@ const deleteProduct = catchAsync(async (req, res) => {
   });
 });
 
+// delete multiple products
+const deleteMultipleProducts = catchAsync(async (req, res) => {
+  const result = await ProductServices.deleteMultipleProducts(req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "Products deleted successfully",
+    data: result,
+  });
+});
+
 // sell product
 const sellProduct = catchAsync(async (req, res) => {
   const productId = req.params.id;
@@ -79,6 +90,7 @@ export const ProductController = {
   getAllProducts,
   getSingleProduct,
   deleteProduct,
+  deleteMultipleProducts,
   sellProduct,
   updateProduct,
 };

@@ -53,8 +53,15 @@ const sellProductValidationSchema = z.object({
   buyerEmail: z.string().email().nonempty(),
 });
 
+const bulkDeleteProductValidationSchema = z.object({
+  selectedGadgets: z
+    .array(z.string())
+    .nonempty({ message: "No products selected to delete" }),
+});
+
 export const productValidations = {
   createProductValidationSchema,
   updateProductValidationSchema,
+  bulkDeleteProductValidationSchema,
   sellProductValidationSchema,
 };

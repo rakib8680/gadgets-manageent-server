@@ -7,13 +7,17 @@ const router = Router();
 
 router.post(
   "/add-gadgets",
-  // validateRequest(productValidations.createProductValidationSchema),
+  validateRequest(productValidations.createProductValidationSchema),
   ProductController.addProduct
 );
 router.get("/all-gadgets", ProductController.getAllProducts);
 router.delete("/delete-gadget/:id", ProductController.deleteProduct);
 router.patch("/sell-gadget/:id", ProductController.sellProduct);
-router.patch("/update-gadget/:id", ProductController.updateProduct);
+router.patch(
+  "/update-gadget/:id",
+  validateRequest(productValidations.updateProductValidationSchema),
+  ProductController.updateProduct
+);
 router.get("/:id", ProductController.getSingleProduct);
 
 export const ProductRoutes = router;

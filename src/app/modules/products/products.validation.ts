@@ -44,6 +44,9 @@ const createProductValidationSchema = z.object({
   compatibility: z.array(z.string()).default([]).optional(),
 });
 
+const updateProductValidationSchema = createProductValidationSchema.partial();
+
 export const productValidations = {
   createProductValidationSchema,
+  updateProductValidationSchema,
 };

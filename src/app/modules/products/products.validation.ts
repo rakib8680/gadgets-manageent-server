@@ -46,7 +46,15 @@ const createProductValidationSchema = z.object({
 
 const updateProductValidationSchema = createProductValidationSchema.partial();
 
+const sellProductValidationSchema = z.object({
+  productName: z.string().nonempty(),
+  quantity: z.number().min(1),
+  buyerName: z.string().nonempty(),
+  buyerEmail: z.string().email().nonempty(),
+});
+
 export const productValidations = {
   createProductValidationSchema,
   updateProductValidationSchema,
+  sellProductValidationSchema,
 };

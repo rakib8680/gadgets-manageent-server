@@ -6,6 +6,7 @@ import handleZodError from "../errors/handleZodError";
 import mongoose from "mongoose";
 import handleCastError from "../errors/handleCastError";
 import duplicateKeyError from "../errors/duplicateKeyError";
+import handleValidationError from "../errors/handleValidationError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorResponse: TErrorResponse = {
@@ -14,13 +15,15 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorMessage: "Something Went Wrong",
   };
 
-  // console.log(err.code === 11000);
+  // console.log(err instanceof mongoose.Error.ValidationError);
 
   if (err instanceof ZodError) {
     errorResponse = handleZodError(err);
+  } else if (err instanceof mongoose.Error.ValidationError) {
+    errorResponse = handleValidationError(err);
   } else if (err instanceof mongoose.Error.CastError) {
     errorResponse = handleCastError(err);
-  }else if(err?.code ===11000){
+  } else if (err?.code === 11000) {
     errorResponse = duplicateKeyError(err);
   } else if (err instanceof AppError) {
     errorResponse = {

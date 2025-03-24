@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
-import { TUser } from "./user.interface";
+import { StaticUserModel, TUser } from "./user.interface";
 import { USER_ROLE } from "./user.constant";
 import bcrypt from "bcrypt";
 import config from "../../config";
 
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser, StaticUserModel>(
   {
     name: {
       type: String,
@@ -48,4 +48,16 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-export const UserModel = model<TUser>("user", userSchema);
+// Static methods to check if user exists
+userSchema.statics.isUserExists = async function (email) {
+  return await this.findOne({ email });
+};
+
+userSchema.statics.isPasswordMatched = async function (
+  plainPassword,
+  hashedPassword
+) {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+};
+
+export const UserModel = model<TUser, StaticUserModel>("user", userSchema);

@@ -1,3 +1,4 @@
+import { Model } from "mongoose";
 import { USER_ROLE } from "./user.constant";
 
 export type TUserRole = keyof typeof USER_ROLE;
@@ -10,3 +11,12 @@ export type TUser = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+// Static methods for UserModel
+export interface StaticUserModel extends Model<TUser> {
+  isUserExists(email: string): Promise<TUser | null>;
+  isPasswordMatched(
+    plainPassword: string,
+    hashedPassword: string
+  ): Promise<boolean>;
+}

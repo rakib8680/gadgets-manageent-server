@@ -1,6 +1,8 @@
 import { Schema, model } from "mongoose";
 import { TUser } from "./user.interface";
 import { USER_ROLE } from "./user.constant";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const userSchema = new Schema<TUser>(
   {
@@ -33,5 +35,17 @@ const userSchema = new Schema<TUser>(
     versionKey: false,
   }
 );
+
+// pre save hook to hash password before saving
+userSchema.pre("save", async function (next) {
+  const user = this;
+  if (user?.password) {
+    user.password = await bcrypt.hash(
+      user?.password,
+      Number(config.bcryptSalt)
+    );
+  }
+  next();
+});
 
 export const UserModel = model<TUser>("user", userSchema);

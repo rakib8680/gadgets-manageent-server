@@ -6,7 +6,6 @@ const userSchema = new Schema<TUser>(
   {
     name: {
       type: String,
-      trim: true,
       required: [true, "Name is required"],
     },
     role: {
@@ -31,6 +30,7 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

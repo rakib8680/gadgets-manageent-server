@@ -3,25 +3,23 @@ import { TErrorResponse } from "../Types/TErrorResponse";
 
 const handleZodError = (error: ZodError): TErrorResponse => {
   console.log(error.issues);
+  const extractedMessage = error.issues
+    .map((issue) => {
+      const fieldName = issue.path.join(".");
 
-  // Create a unique error message set to avoid duplicates
-  const extractedMessages = new Set<string>();
-
-  error.issues.forEach((issue) => {
-    const fieldName = issue.path.join(".");
-
-    // Ensure field name is mentioned only once
-    if (!issue.message.toLowerCase().includes(fieldName.toLowerCase())) {
-      extractedMessages.add(`${fieldName} is required`);
-    } else {
-      extractedMessages.add(issue.message);
-    }
-  });
+      // Check if the message already contains the field name to avoid duplication
+      if (issue.message.toLowerCase().includes(fieldName.toLowerCase())) {
+        return issue.message; // Use the message as is
+      } else {
+        return `${fieldName} ${issue.message}`; // Format as "fieldName message"
+      }
+    })
+    .join(". ");
 
   return {
     success: false,
     message: "Validation Error",
-    errorMessage: Array.from(extractedMessages).join(". "), // Convert Set to string
+    errorMessage: extractedMessage,
   };
 };
 

@@ -53,6 +53,7 @@ userSchema.statics.isUserExists = async function (email) {
   return await this.findOne({ email });
 };
 
+// Static method to check if password matches
 userSchema.statics.isPasswordMatched = async function (
   plainPassword,
   hashedPassword

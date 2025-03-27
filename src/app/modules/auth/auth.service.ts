@@ -12,16 +12,14 @@ const registerUser = async (payload: TUser) => {
     throw new AppError(400, "User already exists");
   }
 
-  const result = (await UserModel.create(payload)).toObject() as Partial<TUser>;
-  delete result?.password;
-
+  const result = await UserModel.create(payload);
   return result;
 };
 
 // login user
 const loginUser = async (payload: TLoginPayload) => {
   // check if user exists
-  const user = (await UserModel.isUserExists(payload?.email));
+  const user = await UserModel.isUserExists(payload?.email);
   if (!user) {
     throw new AppError(400, "No account registered with this email");
   }
@@ -47,9 +45,6 @@ const loginUser = async (payload: TLoginPayload) => {
     config.jwtSecret as string,
     config.jwtExpiresIn as number
   );
-
-
- 
 
   return {
     user,

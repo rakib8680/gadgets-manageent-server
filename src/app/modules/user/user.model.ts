@@ -6,7 +6,6 @@ import config from "../../config";
 
 const userSchema = new Schema<TUser, StaticUserModel>(
   {
-    _id: Schema.Types.ObjectId,
     name: {
       type: String,
       required: [true, "Name is required"],
@@ -47,6 +46,14 @@ userSchema.pre("save", async function (next) {
     );
   }
   next();
+});
+
+// Transform toJSON method to remove password from response
+userSchema.set("toJSON", {
+  transform: function (doc, ret) {
+    delete ret.password;
+    return ret;
+  },
 });
 
 // Static methods to check if user exists

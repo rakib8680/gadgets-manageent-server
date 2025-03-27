@@ -6,6 +6,7 @@ import config from "../../config";
 
 const userSchema = new Schema<TUser, StaticUserModel>(
   {
+    _id: Schema.Types.ObjectId,
     name: {
       type: String,
       required: [true, "Name is required"],

@@ -3,7 +3,7 @@ import AppError from "../../errors/AppError";
 import { TUser } from "../user/user.interface";
 import { UserModel } from "../user/user.model";
 import { TLoginPayload } from "./auth.interface";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { JwtPayload } from "jsonwebtoken";
 import { generateJwtToken } from "./auth.utils";
 
 // register user
@@ -56,3 +56,4 @@ export const AuthServices = {
   registerUser,
   loginUser,
 };
+ 

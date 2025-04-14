@@ -2,6 +2,8 @@ import { Router } from "express";
 import { ProductController } from "./products.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { productValidations } from "./products.validation";
+import auth from "../../middlewares/auth";
+import { USER_ROLE } from "../user/user.constant";
 
 const router = Router();
 
@@ -24,6 +26,7 @@ router.patch(
 );
 router.patch(
   "/update-gadget/:id",
+  auth(USER_ROLE.admin, USER_ROLE.seller),
   validateRequest(productValidations.updateProductValidationSchema),
   ProductController.updateProduct
 );

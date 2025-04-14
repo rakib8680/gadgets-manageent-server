@@ -9,18 +9,25 @@ const router = Router();
 
 router.post(
   "/add-gadgets",
+  auth(USER_ROLE.admin, USER_ROLE.seller),
   validateRequest(productValidations.createProductValidationSchema),
   ProductController.addProduct
 );
 router.get("/all-gadgets", ProductController.getAllProducts);
 router.delete(
   "/delete-gadgets",
+  auth(USER_ROLE.admin, USER_ROLE.seller),
   validateRequest(productValidations.bulkDeleteProductValidationSchema),
   ProductController.deleteMultipleProducts
 );
-router.delete("/delete-gadget/:id", ProductController.deleteProduct);
+router.delete(
+  "/delete-gadget/:id",
+  auth(USER_ROLE.admin, USER_ROLE.seller),
+  ProductController.deleteProduct
+);
 router.patch(
   "/sell-gadget/:id",
+  auth(USER_ROLE.seller),
   validateRequest(productValidations.sellProductValidationSchema),
   ProductController.sellProduct
 );

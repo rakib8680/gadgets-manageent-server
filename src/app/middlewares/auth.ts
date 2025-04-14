@@ -19,7 +19,7 @@ const auth = (...roles: TUserRole[]) => {
       config.jwtSecret as string
     ) as JwtPayload;
 
-    const {email, role } = decodedData;
+    const { email, role } = decodedData;
 
     // check if user exists
     const user = await UserModel.isUserExists(email);
@@ -42,7 +42,3 @@ const auth = (...roles: TUserRole[]) => {
 };
 
 export default auth;
-
-
-
-//todo - check jwt error handling

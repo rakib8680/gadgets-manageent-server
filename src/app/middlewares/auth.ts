@@ -35,7 +35,7 @@ const auth = (...roles: TUserRole[]) => {
       );
     };
 
- 
+    req.user = decodedData;
 
     next();
   });

@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import handleCastError from "../errors/handleCastError";
 import duplicateKeyError from "../errors/duplicateKeyError";
 import handleValidationError from "../errors/handleValidationError";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorResponse: TErrorResponse = {
@@ -15,7 +16,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorMessage: "Something Went Wrong",
   };
 
-  // console.log(err instanceof mongoose.Error.ValidationError);
+  // console.log(err instanceof JsonWebTokenError);
 
   if (err instanceof ZodError) {
     errorResponse = handleZodError(err);
@@ -25,6 +26,12 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorResponse = handleCastError(err);
   } else if (err?.code === 11000) {
     errorResponse = duplicateKeyError(err);
+  } else if (err instanceof JsonWebTokenError) {
+    errorResponse = {
+      success: false,
+      message: "You are not authorized to access this feature",
+      errorMessage: err.message,
+    };
   } else if (err instanceof AppError) {
     errorResponse = {
       success: false,

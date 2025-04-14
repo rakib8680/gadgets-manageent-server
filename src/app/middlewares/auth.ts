@@ -13,13 +13,13 @@ const auth = (...roles: TUserRole[]) => {
     if (!token) {
       throw new AppError(status.UNAUTHORIZED, "Unauthorized access");
     }
-
+    // check if token is valid
     const decodedData = jwt.verify(
       token,
       config.jwtSecret as string
     ) as JwtPayload;
 
-    const { _id, email, role } = decodedData;
+    const {email, role } = decodedData;
 
     // check if user exists
     const user = await UserModel.isUserExists(email);
@@ -33,7 +33,7 @@ const auth = (...roles: TUserRole[]) => {
         status.FORBIDDEN,
         "You are not authorized to access this feature"
       );
-    };
+    }
 
     req.user = decodedData;
 
@@ -42,3 +42,7 @@ const auth = (...roles: TUserRole[]) => {
 };
 
 export default auth;
+
+
+
+//todo - check jwt error handling

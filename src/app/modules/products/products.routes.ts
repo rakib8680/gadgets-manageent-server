@@ -14,6 +14,11 @@ router.post(
   ProductController.addProduct
 );
 router.get("/all-gadgets", ProductController.getAllProducts);
+router.get(
+  "/my-gadgets",
+  auth(USER_ROLE.seller),
+  ProductController.getMyProducts
+);
 router.delete(
   "/delete-gadgets",
   auth(USER_ROLE.admin, USER_ROLE.seller),

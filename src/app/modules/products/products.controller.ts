@@ -28,6 +28,20 @@ const getAllProducts = catchAsync(async (req, res) => {
   });
 });
 
+// get My products
+const getMyProducts = catchAsync(async (req, res) => {
+  const user = req.user;
+  const result = await ProductServices.getMyProducts(req.query, user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: status.OK,
+    message: "All products fetched successfully",
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
 // get single product by ID
 const getSingleProduct = catchAsync(async (req, res) => {
   const result = await ProductServices.getSingleProduct(req.params.id);
@@ -88,6 +102,7 @@ const sellProduct = catchAsync(async (req, res) => {
 export const ProductController = {
   addProduct,
   getAllProducts,
+  getMyProducts,
   getSingleProduct,
   deleteProduct,
   deleteMultipleProducts,

@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 type TCategory =
   | "smartphone"
@@ -23,9 +23,9 @@ type TConnectivity =
 type TPowerSource = "Battery" | "Plug-in" | "Battery & Plug-in";
 
 export type TFeature = {
-  cameraResolution?: string;
-  storageCapacity?: string;
-  screenSize?: string;
+  // cameraResolution?: string;
+  // storageCapacity?: string;
+  // screenSize?: string;
   [key: string]: any; // Additional features can be added dynamically
 };
 
@@ -39,6 +39,7 @@ export type TProduct = {
   name: string;
   price: number;
   imageURL: string;
+  seller_id:Types.ObjectId;
   quantity: number;
   releaseDate: Date;
   brand: string;

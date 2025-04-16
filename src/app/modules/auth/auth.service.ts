@@ -56,4 +56,3 @@ export const AuthServices = {
   registerUser,
   loginUser,
 };
- 

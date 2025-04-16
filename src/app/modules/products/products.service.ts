@@ -6,6 +6,7 @@ import { SalesHistoryModel } from "../sales_history/history.model";
 import AppError from "../../errors/AppError";
 import QueryBuilder from "../../helpers/queryBuilder";
 import { productsSearchableFields } from "./products.constant";
+import { JwtPayload } from "jsonwebtoken";
 
 // insert Product to DB
 const addProduct = async (payload: TProduct) => {
@@ -26,6 +27,30 @@ const addProduct = async (payload: TProduct) => {
 // get all products
 const getAllProducts = async (query: Record<string, unknown>) => {
   const productsQuery = new QueryBuilder(ProductModel.find(), query)
+    .search(productsSearchableFields)
+    .filterPrice()
+    .sort()
+    .filter()
+    .paginate();
+
+  const data = await productsQuery.modelQuery;
+  const meta = await productsQuery.countTotal();
+  return {
+    meta,
+    data,
+  };
+};
+
+// get My products
+const getMyProducts = async (
+  query: Record<string, unknown>,
+  user: JwtPayload
+) => {
+  console.log(user);
+  const productsQuery = new QueryBuilder(
+    ProductModel.find({ seller_id: user?._id }),
+    query
+  )
     .search(productsSearchableFields)
     .filterPrice()
     .sort()
@@ -150,6 +175,7 @@ const sellProduct = async (productId: string, payload: TSalesHistory) => {
 export const ProductServices = {
   addProduct,
   getAllProducts,
+  getMyProducts,
   getSingleProduct,
   deleteProduct,
   deleteMultipleProducts,

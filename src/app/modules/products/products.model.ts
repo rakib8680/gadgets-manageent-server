@@ -25,6 +25,7 @@ const productSchema = new Schema<TProduct>({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   imageURL: { type: String, required: true },
+  seller_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   quantity: { type: Number, required: true },
   releaseDate: { type: Date, required: true },
   brand: { type: String, required: true },

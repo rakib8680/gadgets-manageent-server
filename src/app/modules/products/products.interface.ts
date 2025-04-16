@@ -39,7 +39,7 @@ export type TProduct = {
   name: string;
   price: number;
   imageURL: string;
-  seller_id:Types.ObjectId;
+  seller_id: Types.ObjectId;
   quantity: number;
   releaseDate: Date;
   brand: string;

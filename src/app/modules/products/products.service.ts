@@ -28,7 +28,10 @@ const addProduct = async (payload: TProduct, user: JwtPayload) => {
 
 // get all products
 const getAllProducts = async (query: Record<string, unknown>) => {
-  const productsQuery = new QueryBuilder(ProductModel.find(), query)
+  const productsQuery = new QueryBuilder(
+    ProductModel.find().populate("seller_id", "name email"),
+    query
+  )
     .search(productsSearchableFields)
     .filterPrice()
     .sort()

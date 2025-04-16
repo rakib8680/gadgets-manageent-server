@@ -9,7 +9,7 @@ import { productsSearchableFields } from "./products.constant";
 import { JwtPayload } from "jsonwebtoken";
 
 // insert Product to DB
-const addProduct = async (payload: TProduct) => {
+const addProduct = async (payload: TProduct, user: JwtPayload) => {
   // check if product exists
   const isProductExist = await ProductModel.findOne({ name: payload.name });
 
@@ -19,6 +19,8 @@ const addProduct = async (payload: TProduct) => {
     await isProductExist.save();
     return isProductExist;
   } else {
+    // add seller id to payload
+    payload.seller_id = user?._id;
     const result = await ProductModel.create(payload);
     return result;
   }

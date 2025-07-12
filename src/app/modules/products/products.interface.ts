@@ -7,6 +7,8 @@ type TCategory =
   | "smartwatch"
   | "headphone"
   | "speaker"
+  | "console"
+  | "camera"
   | "accessory";
 type TOperatingSystem = "iOS" | "Android" | "Windows" | "macOS" | "Linux";
 type TConnectivity =

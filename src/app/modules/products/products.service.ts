@@ -51,7 +51,6 @@ const getMyProducts = async (
   query: Record<string, unknown>,
   user: JwtPayload
 ) => {
-  console.log(user);
   const productsQuery = new QueryBuilder(
     ProductModel.find({ seller_id: user?._id }),
     query

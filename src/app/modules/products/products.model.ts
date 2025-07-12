@@ -21,24 +21,30 @@ const featuresSchema = new Schema<TFeature>(
   { strict: false, _id: false }
 );
 
-const productSchema = new Schema<TProduct>({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  imageURL: { type: String, required: true },
-  seller_id: { type: Schema.Types.ObjectId, ref: "user" },
-  quantity: { type: Number, required: true },
-  releaseDate: { type: Date, required: true },
-  brand: { type: String, required: true },
-  modelNo: { type: String, required: true },
-  category: { type: String, required: true },
-  operatingSystem: { type: String },
-  connectivity: { type: [String] },
-  powerSource: { type: String },
-  features: { type: featuresSchema },
-  weight: { type: Number },
-  dimensions: { type: dimensionsSchema },
-  compatibility: { type: [String] },
-});
+const productSchema = new Schema<TProduct>(
+  {
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    imageURL: { type: String, required: true },
+    seller_id: { type: Schema.Types.ObjectId, ref: "user" },
+    quantity: { type: Number, required: true },
+    releaseDate: { type: Date, required: true },
+    brand: { type: String, required: true },
+    modelNo: { type: String, required: true },
+    category: { type: String, required: true },
+    operatingSystem: { type: String },
+    connectivity: { type: [String] },
+    powerSource: { type: String },
+    features: { type: featuresSchema },
+    weight: { type: Number },
+    dimensions: { type: dimensionsSchema },
+    compatibility: { type: [String] },
+  },
+  {
+    timestamps: true, // Automatically manage createdAt and updatedAt fields
+    versionKey: false, // Disable the __v field
+  }
+);
 
 // static method to check if product exists
 // productSchema.statics.isProductExist = async function (name: string) {

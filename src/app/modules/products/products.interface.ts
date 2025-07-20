@@ -9,8 +9,21 @@ type TCategory =
   | "speaker"
   | "console"
   | "camera"
+  | "television"
+  | "drone"
+  | "gaming"
+  | "vr"
+  | "audio"
   | "accessory";
-type TOperatingSystem = "iOS" | "Android" | "Windows" | "macOS" | "Linux";
+
+type TOperatingSystem =
+  | "iOS"
+  | "Android"
+  | "Windows"
+  | "macOS"
+  | "Linux"
+  | "ipadOS"
+  | "Other";
 type TConnectivity =
   | "WiFi"
   | "Bluetooth"

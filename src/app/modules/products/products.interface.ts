@@ -14,6 +14,7 @@ type TCategory =
   | "gaming"
   | "vr"
   | "audio"
+  | "television"
   | "accessory";
 
 type TOperatingSystem =
@@ -23,6 +24,8 @@ type TOperatingSystem =
   | "macOS"
   | "Linux"
   | "ipadOS"
+  | "tvOS"
+  | "watchOS"
   | "Other";
 type TConnectivity =
   | "WiFi"

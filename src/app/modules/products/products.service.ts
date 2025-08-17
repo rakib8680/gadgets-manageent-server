@@ -52,7 +52,10 @@ const getMyProducts = async (
   user: JwtPayload
 ) => {
   const productsQuery = new QueryBuilder(
-    ProductModel.find({ seller_id: user?._id }),
+    ProductModel.find({ seller_id: user?._id }).populate(
+      "seller_id",
+      "name email"
+    ),
     query
   )
     .search(productsSearchableFields)
@@ -71,7 +74,10 @@ const getMyProducts = async (
 
 // get single product by ID
 const getSingleProduct = async (id: string) => {
-  const result = await ProductModel.findById(id);
+  const result = await ProductModel.findById(id).populate(
+    "seller_id",
+    "name email"
+  );
   if (!result) {
     throw new AppError(status.NOT_FOUND, "No product found");
   }

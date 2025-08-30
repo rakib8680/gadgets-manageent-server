@@ -8,6 +8,7 @@ export type TUser = {
   name: string;
   role: TUserRole;
   email: string;
+  image:string;
   password: string;
   createdAt?: Date;
   updatedAt?: Date;

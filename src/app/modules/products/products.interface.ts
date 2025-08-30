@@ -9,7 +9,6 @@ type TCategory =
   | "speaker"
   | "console"
   | "camera"
-  | "television"
   | "drone"
   | "gaming"
   | "vr"

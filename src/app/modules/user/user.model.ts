@@ -18,6 +18,11 @@ const userSchema = new Schema<TUser, StaticUserModel>(
       },
       default: USER_ROLE.buyer,
     },
+    image: {
+      type: String,
+      default:
+        "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg",
+    },
     email: {
       type: String,
       required: [true, "Email is required"],

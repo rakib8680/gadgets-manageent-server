@@ -30,7 +30,21 @@ const getAllUsers = catchAsync(async (req, res) => {
   });
 });
 
+//get single user
+const getSingleUser = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await UserServices.getSingleUser(id);
+
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "User retrieved successfully",
+    data: result,
+  });
+});
+
 export const UserControllers = {
   updateMyProfile,
   getAllUsers,
+  getSingleUser,
 };

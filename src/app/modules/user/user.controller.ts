@@ -3,21 +3,6 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 
-//update self profile
-const updateMyProfile = catchAsync(async (req, res) => {
-  const user = req.user;
-  const payload = req.body;
-
-  const result = await UserServices.updateMyProfile(user, payload);
-
-  sendResponse(res, {
-    statusCode: status.OK,
-    success: true,
-    message: "Profile updated successfully",
-    data: result,
-  });
-});
-
 //get all users
 const getAllUsers = catchAsync(async (req, res) => {
   const result = await UserServices.getAllUsers();
@@ -43,8 +28,38 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
+//update self profile
+const updateMyProfile = catchAsync(async (req, res) => {
+  const user = req.user;
+  const payload = req.body;
+
+  const result = await UserServices.updateMyProfile(user, payload);
+
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Profile updated successfully",
+    data: result,
+  });
+});
+
+// get my profile
+const getMyProfile = catchAsync(async (req, res) => {
+  const user = req.user;
+
+  const result = await UserServices.getMyProfile(user);
+
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Profile retrieved successfully",
+    data: result,
+  });
+});
+
 export const UserControllers = {
   updateMyProfile,
   getAllUsers,
   getSingleUser,
+  getMyProfile,
 };

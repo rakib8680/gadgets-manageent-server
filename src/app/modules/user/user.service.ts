@@ -16,6 +16,21 @@ const updateMyProfile = async (
   return result;
 };
 
+
+//get all users 
+const getAllUsers = async (): Promise<TUser[]> => {
+  const users = await UserModel.find().select("-password");
+  return users;
+};
+
+
+
 export const UserServices = {
   updateMyProfile,
+  getAllUsers,
 };
+
+
+
+
+

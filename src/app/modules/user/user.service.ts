@@ -4,6 +4,7 @@ import { UserModel } from "./user.model";
 
 //get all users
 const getAllUsers = async (): Promise<TUser[]> => {
+  //todo- query builder implementation
   const users = await UserModel.find();
   return users;
 };
